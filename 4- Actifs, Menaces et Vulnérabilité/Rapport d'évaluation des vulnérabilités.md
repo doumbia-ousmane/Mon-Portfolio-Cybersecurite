@@ -1,9 +1,15 @@
 # Rapport d'Évaluation de la Vulnérabilité
+
+## Scénario 
+Vous êtes un analyste en cybersécurité nouvellement embauché dans une entreprise de commerce électronique. L'entreprise stocke ses informations sur un serveur de base de données distant, car de nombreux employés travaillent à distance depuis différents endroits du monde. Ces employés consultent régulièrement le serveur pour identifier des clients potentiels. La base de données est accessible au public depuis la création de l'entreprise il y a trois ans. En tant que professionnel de la cybersécurité, vous êtes conscient que le maintien de ce serveur ouvert constitue une grave vulnérabilité. Une évaluation des vulnérabilités vous permettra de communiquer les risques potentiels aux décideurs de l'entreprise. Vous devez rédiger un rapport expliquant clairement en quoi ce serveur vulnérable représente un risque pour les opérations commerciales et comment le sécuriser.
+
+## Rapport
 **Date :** 14 janvier 2024  
 **Analyste :** Analyste en Cybersécurité  
 **Objet :** Sécurisation du serveur de base de données MySQL
 
 ---
+
 
 ## 1. Description du Système
 Le serveur de base de données constitue le cœur informationnel de l'entreprise. 
@@ -35,7 +41,7 @@ La protection contre les accès non autorisés est impérative pour maintenir l'
 ---
 
 ## 4. Évaluation des Risques
-L'analyse suivante quantifie le risque selon la formule : $Probabilité \times Gravité = Risque$.
+L'analyse suivante quantifie le risque selon la formule : Probabilité x Gravité = Risque.
 
 | Source de la menace | Événement menaçant | Probabilité (1-3) | Gravité (1-3) | Score de Risque |
 | :--- | :--- | :---: | :---: | :---: |
