@@ -1,1 +1,89 @@
+# Tcpdump - Capturez votre premier paquet
 
+## Scénario 
+Vous êtes un analyste réseau qui doit utiliser tcpdump pour capturer et analyser le trafic réseau en direct depuis une machine virtuelle Linux.
+
+Le laboratoire commence avec votre compte utilisateur, appelé analyste, déjà connecté à un terminal Linux.
+
+Votre répertoire personnel sous Linux contient un exemple de fichier de capture de paquets que vous utiliserez à la fin du TP pour répondre à quelques questions sur le trafic réseau qu'il contient.
+
+Voici comment procéder : premièrement, vous identifierez les interfaces réseau sur lesquelles capturer les paquets. Deuxièmement, vous utiliserez tcpdump pour filtrer le trafic réseau en temps réel. Troisièmement, vous capturerez le trafic réseau à l’aide de tcpdump. Enfin, vous filtrerez les paquets capturés.
+
+## Solutions
+1. Identifier les interfaces réseau.
+   
+* À utiliser `ifconfig` pour identifier les interfaces disponibles :
+  
+![chrome_71aeK1ZgJE](https://github.com/Kwangsa19/Ketmanto-Cybersecurity-Portfolio/assets/135963482/6147d93d-c5d9-4f4b-bdb9-e4a5b51a1328)
+
+* Identifiez les options d'interface disponibles pour la capture de paquets :
+![chrome_OslduuRBmA](https://github.com/Kwangsa19/Ketmanto-Cybersecurity-Portfolio/assets/135963482/21a5c4e9-979e-4d0a-a62b-0dca7435cee8)
+
+
+2. Analysez le trafic réseau d'une interface réseau avec tcpdump.
+* Utilisez `sudo tcpdump -i eth0 -v -c5` pour filtrer les données des paquets réseau en direct:
+  
+![chrome_xk2afcYBtV](https://github.com/Kwangsa19/Ketmanto-Cybersecurity-Portfolio/assets/135963482/06c9e857-c3fb-4445-b51f-8769c3b569ef)
+
+> `-i eth0`: Capturez les données spécifiquement à partir de l'`eth0` interface.
+
+> `-v`: Afficher les données détaillées du paquet.
+
+> `-c5`: Capturez 5 paquets de données.
+
+3. Capture du trafic réseau:
+
+* Capturez les données du paquet dans un fichier nommé `capture.pcap`:  `sudo tcpdump -i eth0 -nn -c9 port 80 -w capture.pcap &`.
+
+> `-i eth0`: Capturez les données de l'interface eth0.
+
+> `-nn`: N’essayez pas de résoudre les adresses IP ou les ports en noms. Il s’agit d’une bonne pratique de sécurité, car les données de recherche peuvent être invalides. Cela empêche également les personnes malveillantes d’être alertées d’une enquête.
+
+> `-c9`: Capturez 9 paquets de données puis quittez.
+
+> `port 80`: Filtrer uniquement le trafic du port 80. Il s'agit du port HTTP par défaut.
+
+> `-w capture.pcap`: Enregistrez les données capturées dans le fichier nommé.
+
+> `&`: Ceci est une instruction donnée au shell Bash pour exécuter la commande en arrière-plan.
+
+![chrome_czTEkhJt5O](https://github.com/Kwangsa19/Ketmanto-Cybersecurity-Portfolio/assets/135963482/717252ee-70be-4b9a-93c5-08457d5a05e5)
+
+* Utilisez `curl` ceci pour générer du trafic HTTP (port 80) : `curl opensource.google.com`.
+> Ouvrez un site web et générez du trafic HTTP (port TCP 80) qui peut être capturé.   
+
+
+![chrome_hxKylypKNY](https://github.com/Kwangsa19/Ketmanto-Cybersecurity-Portfolio/assets/135963482/49b3ec3c-b8ea-4335-b33b-7061fe8bb24f)
+
+* Vérifiez que les données du paquet ont été capturées: `ls -l capture.pcap`.
+
+![chrome_HhfPeeYOiq](https://github.com/Kwangsa19/Ketmanto-Cybersecurity-Portfolio/assets/135963482/53485a11-4a34-4fba-82bc-f62626f131cc)
+
+4. Filtrer les données des paquets capturés.
+* Filtrer les données d'en-tête de paquet du `capture.pcap` fichier de capture: `sudo tcpdump -nn -r capture.pcap -v`.
+
+![chrome_RUJXqYZJYp](https://github.com/Kwangsa19/Ketmanto-Cybersecurity-Portfolio/assets/135963482/61e9deb0-d3c7-475d-9a3a-bdf7978834b6)
+
+
+![chrome_bzcD3CgViN](https://github.com/Kwangsa19/Ketmanto-Cybersecurity-Portfolio/assets/135963482/c5c8261a-9e3d-477b-bc02-83514701ab2c)
+
+> `-nn`: Désactiver la recherche des noms de port et de protocole.
+> `-r`: Lire les données de capture à partir du fichier spécifié.
+
+> `-v`: Afficher les données détaillées du paquet. 
+
+* Filtrer les données de paquets étendues du `capture.pcap` fichier de capture: `sudo tcpdump -nn -r capture.pcap -X`.
+
+![chrome_30Kqm2ODsu](https://github.com/Kwangsa19/Ketmanto-Cybersecurity-Portfolio/assets/135963482/fbec172d-ffe6-40f5-992f-460850b90540)
+
+![chrome_fPM4JsnaBf](https://github.com/Kwangsa19/Ketmanto-Cybersecurity-Portfolio/assets/135963482/7dcfb48a-0362-4931-9ba0-1d3fab22bca0)
+
+
+![chrome_XCBa8KnbDi](https://github.com/Kwangsa19/Ketmanto-Cybersecurity-Portfolio/assets/135963482/6331e7de-b3b9-4078-b682-bebae599b1a7)
+
+> `-nn`: Désactiver la recherche des noms de port et de protocole.
+
+> `-r`: Lire les données de capture à partir du fichier spécifié.
+
+> `-X`: Afficher les données des paquets au format hexadécimal et ASCII. Les analystes de sécurité peuvent analyser ces formats pour détecter des schémas ou des anomalies lors d'analyses de logiciels malveillants ou d'analyses forensiques.
+> Remarque : L’hexadécimal, également appelé hex ou base 16, utilise 16 symboles pour représenter des valeurs, notamment les chiffres 0 à 9 et les lettres A, B, C, D, E et F. Le code ASCII (American Standard Code for Information Interchange) est une norme d’encodage de caractères qui utilise un ensemble de caractères pour représenter du texte sous forme numérique.
